@@ -5,7 +5,7 @@
 }
 
 @media screen and (max-width: 595px) {
-    .page__container{
+    .page__container {
         max-width: 282px;
         padding: 28px 19px 36px;
     }
