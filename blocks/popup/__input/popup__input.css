@@ -1,14 +1,15 @@
 .popup__input {
-    font-family: Inter;
+    font-family: "Inter", "Arial", sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
     line-height: 17px;
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 0;
     padding-bottom: 13px;
 }
 
-.popup__input:not(:last-child) {
+.popup__input:not(:last-child :first-of-type) {
     margin-top: 30px;
 }

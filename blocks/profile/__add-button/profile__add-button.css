@@ -7,6 +7,7 @@
     background-image: url('../../../images/profile__add.svg');
     background-position: center;
     border: 2px solid white;
+    border-radius: 2px;
     justify-self: end;
     transition: opacity 0.3s;
 }

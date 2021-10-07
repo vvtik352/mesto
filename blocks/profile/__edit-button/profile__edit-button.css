@@ -6,7 +6,7 @@
     background-color: transparent;
     background-repeat: no-repeat;
     background-position: center;
-    margin-left: 10px;
+    margin-left: 18px;
     background-image: url('../../../images/profile__edit.svg');
     transition: opacity 0.3s;
 }
@@ -16,8 +16,9 @@
 }
 
 
-@media screen and (max-width: 637px) {
+@media screen and (max-width: 667px) {
     .profile__edit-button {
+        margin-left: 10px;
         width: 18px;
         height: 18px;
     }

@@ -20,15 +20,9 @@
                 <div class="profile__container">
                     <img class='profile__avatar' src='./images/avatar.jpeg' alt='Жак Ив Кусто'>
                     <div class="profile__info">
-                        <h1 class="profile__title">
-                            Жак-Ив Кусто
-
-
-                        </h1>
+                        <h1 class="profile__title">Жак-Ив Кусто</h1>
                         <button class="profile__edit-button" type="button" aria-label="Редактировать"></button>
-                        <p class="profile__subtitle">
-                            Исследователь океана
-                        </p>
+                        <p class="profile__subtitle">Исследователь океана</p>
                     </div>
                 </div>
                 <button class="profile__add-button" type="button" aria-label="Добавить"></button>
@@ -42,7 +36,7 @@
                         <h2 class='element__name'>
                             Атлантический океан
                         </h2>
-                        <button class='element__like'></button>
+                        <button class='element__like' type="button"></button>
                     </div>
                 </div>
                 <div class='element'>
@@ -53,7 +47,7 @@
                         <h2 class='element__name'>
                             Якутия
                         </h2>
-                        <button class='element__like'></button>
+                        <button class='element__like' type="button"></button>
                     </div>
                 </div>
                 <div class='element'>
@@ -64,7 +58,7 @@
                         <h2 class='element__name'>
                             Чарские пески, Забайкалье
                         </h2>
-                        <button class='element__like'></button>
+                        <button class='element__like' type="button"></button>
                     </div>
                 </div>
 
@@ -76,7 +70,7 @@
                         <h2 class='element__name'>
                             Астраханская область
                         </h2>
-                        <button class='element__like'></button>
+                        <button class='element__like' type="button"></button>
                     </div>
                 </div>
                 <div class='element'>
@@ -88,7 +82,7 @@
                             Курильские острова
 
                         </h2>
-                        <button class='element__like'></button>
+                        <button class='element__like' type="button"></button>
                     </div>
                 </div>
                 <div class='element'>
@@ -99,7 +93,7 @@
                         <h2 class='element__name'>
                             Саяно-Шушенская ГЭС
                         </h2>
-                        <button class='element__like'></button>
+                        <button class='element__like' type="button"></button>
                     </div>
                 </div>
             </section>
@@ -113,16 +107,16 @@
 
     <div class='popup'>
         <div class="popup__container">
-            <button class='popup__close'></button>
+            <button class='popup__close' type="button"></button>
             <h2 class="popup__title">
                 Редактировать профиль
             </h2>
 
-            <div class='popup__form'>
-                <input class='popup__input' id='input-name' type='text' value="Жак-Ив Кусто">
-                <input class='popup__input' id='input-description' type='text' value='Исследователь океана'>
-                <button class='popup__submit'>Сохранить</button>
-            </div>
+            <form class='popup__form' name='user-info'>
+                <input class='popup__input' name='name' id='input-name' type='text'>
+                <input class='popup__input' name='description' id='input-description' type='text'>
+                <button class='popup__submit' type="submit">Сохранить</button>
+            </form>
         </div>
     </div>
     <script src='./scripts/index.js'></script>
