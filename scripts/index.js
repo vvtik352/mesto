@@ -9,7 +9,6 @@ const popupForm = document.querySelector('.popup__form')
 const popupCloseButton = document.querySelector('.popup__close')
 const descriptionInput = document.querySelector('#input-description')
 const nameInput = document.querySelector('#input-name')
-const submitButton = document.querySelector('.popup__submit')
 
 
 
