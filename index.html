@@ -29,73 +29,17 @@
 
             </section>
             <section class="elements">
-                <div class='element'>
-                    <img class='element__image' src='https://joker.ykt.ru/uploads/posts/thumbs/1341724048_6.jpg'
-                        alt='океан'>
-                    <div class='element__description'>
-                        <h2 class='element__name'>
-                            Атлантический океан
-                        </h2>
-                        <button class='element__like' type="button"></button>
+                <template id="element-template">
+                    <div class='element'>
+                        <button class="element__delete" type="button"></button>
+                        <img class='element__image' src='#'>
+                        <div class='element__description'>
+                            <h2 class='element__name'>
+                            </h2>
+                            <button class='element__like' type="button"></button>
+                        </div>
                     </div>
-                </div>
-                <div class='element'>
-                    <img class='element__image'
-                        src='https://static.tildacdn.com/tild6336-3238-4436-b966-313836346165/02_shachta_mir.jpg'
-                        alt='Якутия'>
-                    <div class='element__description'>
-                        <h2 class='element__name'>
-                            Якутия
-                        </h2>
-                        <button class='element__like' type="button"></button>
-                    </div>
-                </div>
-                <div class='element'>
-                    <img class='element__image'
-                        src='https://static.tildacdn.com/tild6237-3434-4061-b334-633431633834/05_charskie_peski.jpg'
-                        alt='Забайкалье'>
-                    <div class='element__description'>
-                        <h2 class='element__name'>
-                            Чарские пески, Забайкалье
-                        </h2>
-                        <button class='element__like' type="button"></button>
-                    </div>
-                </div>
-
-                <div class='element'>
-                    <img class='element__image'
-                        src='https://static.tildacdn.com/tild3134-6264-4066-b232-383162623263/06_Big-Bogdo.jpg'
-                        alt='Астраханская область'>
-                    <div class='element__description'>
-                        <h2 class='element__name'>
-                            Астраханская область
-                        </h2>
-                        <button class='element__like' type="button"></button>
-                    </div>
-                </div>
-                <div class='element'>
-                    <img class='element__image'
-                        src='https://static.tildacdn.com/tild6236-6630-4965-b439-656465346638/07_vulkan_krenizyna.jpg'
-                        alt='Курильские острова'>
-                    <div class='element__description'>
-                        <h2 class='element__name'>
-                            Курильские острова
-
-                        </h2>
-                        <button class='element__like' type="button"></button>
-                    </div>
-                </div>
-                <div class='element'>
-                    <img class='element__image'
-                        src='https://static.tildacdn.com/tild3963-6437-4136-b561-316562623166/10_GES.jpg'
-                        alt='Саяно-Шушенская ГЭС'>
-                    <div class='element__description'>
-                        <h2 class='element__name'>
-                            Саяно-Шушенская ГЭС
-                        </h2>
-                        <button class='element__like' type="button"></button>
-                    </div>
-                </div>
+                </template>
             </section>
         </main>
         <footer class="footer">
@@ -105,21 +49,44 @@
         </footer>
     </div>
 
-    <div class='popup'>
+    <div class='popup' id='popup__profile'>
         <div class="popup__container">
-            <button class='popup__close' type="button"></button>
+            <button class='popup__close' id='popup-profile_close' type="button"></button>
             <h2 class="popup__title">
                 Редактировать профиль
             </h2>
 
-            <form class='popup__form' name='user-info'>
+            <form class='popup__form' id='popup_profile-info'>
                 <input class='popup__input' name='name' id='input-name' type='text'>
                 <input class='popup__input' name='description' id='input-description' type='text'>
-                <button class='popup__submit' type="submit">Сохранить</button>
+                <button class='popup__submit' id='submit-profile' type="submit">Сохранить</button>
             </form>
         </div>
     </div>
-    <script src='./scripts/index.js'></script>
+
+    <div class='popup' id='popup__card'>
+        <div class="popup__container">
+            <button class='popup__close' id='popup-card_close' type="button"></button>
+            <h2 class="popup__title">
+                Новое место
+            </h2>
+
+            <form class='popup__form' id='popup_card-info'>
+                <input class='popup__input' name='name' id='input-card__name'  placeholder="Название" type='text'>
+                <input class='popup__input' name='description' id='input-link' placeholder="Ссылка на картинку" type='text'>
+                <button class='popup__submit' id='submit-card' type="submit">Сохранить</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="popup" id='popup__image'>
+        <div class='popup__image-container'>
+            <button class='popup__close' id='popup-image_close' type="button"></button>
+            <img class='popup__image-src' src='#'>
+            <p class='popup__image-name'></p>
+        </div>
+    </div>
+    <script src='./scripts/index.js' ></script>
 </body>
 
 </html>
