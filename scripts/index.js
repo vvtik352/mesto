@@ -73,11 +73,8 @@ function addCard(name, link) {
         event.target.closest('.element').remove()
     })
     cardElement.querySelector('.element__image').addEventListener('click', event => {
-        const name = cardElement.querySelector('.element__name').textContent
-        const src = event.target.src
-
-        popupImageSrc.src = src
-        popupImageSrc.alt= name
+        popupImageSrc.src = link
+        popupImageSrc.alt = name
         popupImageName.textContent = name
 
         onEdit(popupImage)
@@ -95,26 +92,37 @@ initialCards.forEach((card) => {
 
 
 
-function onEdit(popup) {
-    nameInput.value = profileName.textContent
-    descriptionInput.value = profileSubtitle.textContent
-    popup.classList.add('popup_opened')
+
+function openPopup(popup) {
+    popup.classList.add('popup_opened');
 }
 
-function onClose(popup) {
+
+function openProfilePopup() {
+    nameInput.value = profileName.textContent
+    descriptionInput.value = profileSubtitle.textContent
+    openPopup(popupProfile);
+}
+
+function openCardPopup() {
+    openPopup(popupCard);
+}
+
+
+function handleCloseButton(popup) {
     popup.classList.remove('popup_opened')
 }
 
 
-function onSubmit(event, popup) {
+function handleSubmitButtonEditProfile(event) {
     event.preventDefault()
     profileName.textContent = nameInput.value
     profileSubtitle.textContent = descriptionInput.value
-    onClose(popup)
+    handleCloseButton(popupProfile)
 }
 
 
-function onSubmitCardForm(event) {
+function handleSubmitButtonCardForm(event) {
     event.preventDefault()
     initialCards.push({
         name: cardNameInput.value,
@@ -123,19 +131,19 @@ function onSubmitCardForm(event) {
     const newCard = addCard(cardNameInput.value, linkInput.value)
     cardContainer.prepend(newCard)
 
-    onClose(popupCard)
+    handleCloseButton(popupCard)
 }
 
 
 // устанавливаем обработчики событий на кнопки
-profileEditButton.addEventListener('click', () => onEdit(popupProfile))
-popupProfileCloseButton.addEventListener('click', () => onClose(popupProfile))
-popupProfileForm.addEventListener('submit', (event) => onSubmit(event, popupProfile))
+popupProfileForm.addEventListener('submit', handleSubmitButtonEditProfile)
+profileEditButton.addEventListener('click', openProfilePopup)
+popupProfileCloseButton.addEventListener('click', () => handleCloseButton(popupProfile))
 
 
-cardAddButton.addEventListener('click', () => onEdit(popupCard))
-popupCardCloseButton.addEventListener('click', () => onClose(popupCard))
-popupCardForm.addEventListener('submit', onSubmitCardForm)
+popupCardForm.addEventListener('submit', handleSubmitButtonCardForm)
+cardAddButton.addEventListener('click', openCardPopup)
+popupCardCloseButton.addEventListener('click', () => handleCloseButton(popupCard))
 
 
-popupImageCloseButton.addEventListener('click', () => onClose(popupImage))
+popupImageCloseButton.addEventListener('click', () => handleCloseButton(popupImage))
