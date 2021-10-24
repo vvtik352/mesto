@@ -77,7 +77,7 @@ function addCard(name, link) {
         popupImageSrc.alt = name
         popupImageName.textContent = name
 
-        onEdit(popupImage)
+        openPopup(popupImage)
     })
     cardElement.querySelector('.element__name').textContent = name
 
