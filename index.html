@@ -58,9 +58,9 @@
 
             <form class='popup__form' id='popup_profile-info'>
                 <input class='popup__input' name='name' id='input-name' type='text' required minlength="2" maxlength="40" >
-                <span class="input-name-error error" ></span>
+                <span class="error" id='input-name-error'></span>
                 <input class='popup__input' name='description' id='input-description' type='text' required minlength="2" maxlength="200" >
-                <span class="input-description-error error" ></span>
+                <span class="error" id='input-description-error' ></span>
                 <button class='popup__submit' id='submit-profile' type="submit">Сохранить</button>
             </form>
         </div>
@@ -76,11 +76,11 @@
             <form class='popup__form' id='popup_card-info'>
                 <input class='popup__input' name='name' id='input-card__name' placeholder="Название" type='text'
                     required>
-                    <span class="input-card__name-error error" ></span>
+                    <span class="error" id="input-card__name-error"></span>
 
                 <input class='popup__input' name='description' id='input-link' placeholder="Ссылка на картинку"
                     type='url' required >
-                    <span class="input-link-error error"></span>
+                    <span class="error" id="input-link-error"></span>
 
                 <button class='popup__submit popup__submit_disabled' id='submit-card' type="submit">Сохранить</button>
             </form>
