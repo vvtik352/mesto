@@ -91,10 +91,32 @@ initialCards.forEach((card) => {
 })
 
 
+function closeByEsc(event) {
 
+    if (event.key == 'Escape') {
+        const openedPopup = document.querySelector('.popup_opened')
+        closePopup(openedPopup)
+    }
+}
+
+function closeByOverlayClick(event) {
+    if (event.target.classList.contains('popup')) {
+        const openedPopup = document.querySelector('.popup_opened')
+        closePopup(openedPopup)
+    }
+}
+
+function closePopup(popup) {
+    popup.classList.remove('popup_opened')
+}
 
 function openPopup(popup) {
     popup.classList.add('popup_opened');
+
+
+    document.addEventListener('keydown', closeByEsc)
+
+    document.addEventListener('click', closeByOverlayClick)
 }
 
 
@@ -109,8 +131,9 @@ function openCardPopup() {
 }
 
 
-function handleCloseButton(popup) {
-    popup.classList.remove('popup_opened')
+function handleCloseButton(event) {
+    const openedPopup = document.querySelector('.popup_opened')
+    closePopup(openedPopup)
 }
 
 
@@ -118,7 +141,7 @@ function handleSubmitButtonEditProfile(event) {
     event.preventDefault()
     profileName.textContent = nameInput.value
     profileSubtitle.textContent = descriptionInput.value
-    handleCloseButton(popupProfile)
+    closePopup(popupProfile)
 }
 
 
@@ -130,20 +153,21 @@ function handleSubmitButtonCardForm(event) {
     })
     const newCard = addCard(cardNameInput.value, linkInput.value)
     cardContainer.prepend(newCard)
-
-    handleCloseButton(popupCard)
+    cardNameInput.value = ''
+    linkInput.value = ''
+    closePopup(popupCard)
 }
 
 
 // устанавливаем обработчики событий на кнопки
 popupProfileForm.addEventListener('submit', handleSubmitButtonEditProfile)
 profileEditButton.addEventListener('click', openProfilePopup)
-popupProfileCloseButton.addEventListener('click', () => handleCloseButton(popupProfile))
+popupProfileCloseButton.addEventListener('click', handleCloseButton)
 
 
 popupCardForm.addEventListener('submit', handleSubmitButtonCardForm)
 cardAddButton.addEventListener('click', openCardPopup)
-popupCardCloseButton.addEventListener('click', () => handleCloseButton(popupCard))
+popupCardCloseButton.addEventListener('click', handleCloseButton)
 
 
-popupImageCloseButton.addEventListener('click', () => handleCloseButton(popupImage))
+popupImageCloseButton.addEventListener('click', handleCloseButton)
