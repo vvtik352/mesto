@@ -57,8 +57,10 @@
             </h2>
 
             <form class='popup__form' id='popup_profile-info'>
-                <input class='popup__input' name='name' id='input-name' type='text'>
-                <input class='popup__input' name='description' id='input-description' type='text'>
+                <input class='popup__input' name='name' id='input-name' type='text' required minlength="2" maxlength="40" >
+                <span class="input-name-error error" ></span>
+                <input class='popup__input' name='description' id='input-description' type='text' required minlength="2" maxlength="200" >
+                <span class="input-description-error error" ></span>
                 <button class='popup__submit' id='submit-profile' type="submit">Сохранить</button>
             </form>
         </div>
@@ -72,21 +74,28 @@
             </h2>
 
             <form class='popup__form' id='popup_card-info'>
-                <input class='popup__input' name='name' id='input-card__name'  placeholder="Название" type='text'>
-                <input class='popup__input' name='description' id='input-link' placeholder="Ссылка на картинку" type='text'>
-                <button class='popup__submit' id='submit-card' type="submit">Сохранить</button>
+                <input class='popup__input' name='name' id='input-card__name' placeholder="Название" type='text'
+                    required>
+                    <span class="input-card__name-error error" ></span>
+
+                <input class='popup__input' name='description' id='input-link' placeholder="Ссылка на картинку"
+                    type='url' required >
+                    <span class="input-link-error error"></span>
+
+                <button class='popup__submit popup__submit_disabled' id='submit-card' type="submit">Сохранить</button>
             </form>
         </div>
     </div>
 
     <div class="popup" id='popup__image'>
         <div class='popup__image-container'>
-            <button class='popup__close' id='popup-image_close' type="button"></button>
+            <button class='popup__close ' id='popup-image_close' type="button"></button>
             <img class='popup__image-src' src='#'>
             <p class='popup__image-name'></p>
         </div>
     </div>
-    <script src='./scripts/index.js' ></script>
+    <script src='./scripts/validate.js'></script>
+    <script src='./scripts/index.js'></script>
 </body>
 
 </html>
