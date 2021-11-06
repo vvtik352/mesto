@@ -91,24 +91,8 @@ initialCards.forEach((card) => {
 })
 
 
-function closeByEsc(event) {
 
-    if (event.key == 'Escape') {
-        const openedPopup = document.querySelector('.popup_opened')
-        closePopup(openedPopup)
-    }
-}
 
-function closeByOverlayClick(event) {
-    if (event.target.classList.contains('popup')) {
-        const openedPopup = document.querySelector('.popup_opened')
-        closePopup(openedPopup)
-    }
-}
-
-function closePopup(popup) {
-    popup.classList.remove('popup_opened')
-}
 
 function openPopup(popup) {
     popup.classList.add('popup_opened');
@@ -119,7 +103,6 @@ function openPopup(popup) {
     document.addEventListener('click', closeByOverlayClick)
 }
 
-
 function openProfilePopup() {
     nameInput.value = profileName.textContent
     descriptionInput.value = profileSubtitle.textContent
@@ -129,6 +112,31 @@ function openProfilePopup() {
 function openCardPopup() {
     openPopup(popupCard);
 }
+
+
+function closePopup(popup) {
+    popup.classList.remove('popup_opened')
+
+    document.removeEventListener('keydown', closeByEsc)
+    document.removeEventListener('click', closeByOverlayClick)
+
+}
+
+function closeByEsc(event) {
+
+    if (event.key == 'Escape') {
+        const openedPopup = document.querySelector('.popup_opened')
+        closePopup(openedPopup)
+    }
+}
+
+function closeByOverlayClick(event) {
+    if (event.target.classList.contains('popup')) {
+        closePopup(event.target)
+    }
+}
+
+
 
 
 function handleCloseButton(event) {

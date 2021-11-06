@@ -28,21 +28,26 @@ const checkInputValidity = (formElement, inputElement, inputErrorClass, errorCla
     }
 };
 
+function disableButton(buttonElement, inactiveButtonClass) {
+    buttonElement.classList.add(inactiveButtonClass)
+    buttonElement.disabled = true
+}
+
+function enableButton(buttonElement, inactiveButtonClass) {
+    buttonElement.classList.remove(inactiveButtonClass)
+    buttonElement.disabled = false
+}
+
+
 function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
     if (hasInvalidInput(inputList)) {
-        buttonElement.classList.add(inactiveButtonClass);
-        disableButton(buttonElement)
+        disableButton(buttonElement, inactiveButtonClass)
 
     } else {
-        buttonElement.classList.remove(inactiveButtonClass);
-        buttonElement.disabled = false
-
+        enableButton(buttonElement, inactiveButtonClass)
     }
 }
 
-function disableButton(buttonElement) {
-    buttonElement.disabled = true
-}
 
 
 const setEventListeners = (inputList, formElement, inputErrorClass, errorClass, submitButtonSelector, inactiveButtonClass) => {
@@ -50,8 +55,7 @@ const setEventListeners = (inputList, formElement, inputErrorClass, errorClass, 
 
     formElement.addEventListener("submit", (event) => {
         event.preventDefault();
-        buttonElement.classList.add(inactiveButtonClass)
-        disableButton(buttonElement)
+        disableButton(buttonElement, inactiveButtonClass)
 
     });
 
