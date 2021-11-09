@@ -1,5 +1,6 @@
 import { Card } from "./Card.js"
-
+import { FormValidator } from "./FormValidator.js"
+import { validatorConfig } from "./constants.js"
 // получаем доступ к основым элементам управления на странице 
 const profileEditButton = document.querySelector('.profile__edit-button')
 const profileName = document.querySelector('.profile__title')
@@ -28,7 +29,6 @@ const popupImage = document.querySelector('#popup__image')
 const popupImageSrc = document.querySelector('.popup__image-src')
 const popupImageName = document.querySelector('.popup__image-name')
 const popupImageCloseButton = document.querySelector('#popup-image_close')
-
 
 
 const initialCards = [
@@ -156,6 +156,14 @@ function handleSubmitButtonCardForm(event) {
     linkInput.value = ''
     closePopup(popupCard)
 }
+
+
+
+const validatorProfile = new FormValidator(validatorConfig, popupProfileForm)
+validatorProfile.enableValidation()
+
+const validatorCard = new FormValidator(validatorConfig, popupCardForm)
+validatorCard.enableValidation()
 
 
 // устанавливаем обработчики событий на кнопки
