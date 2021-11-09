@@ -30,7 +30,7 @@ export class FormValidator {
         this._buttonElement.classList.add(this._inactiveButtonClass)
         this._buttonElement.disabled = true
     }
-    
+
     _enableButton() {
         this._buttonElement.classList.remove(this._inactiveButtonClass)
         this._buttonElement.disabled = false
@@ -83,7 +83,7 @@ export class FormValidator {
         this._inputList.forEach((inputElement) => {
             inputElement.addEventListener('input', () => {
                 this._checkInputValidity(inputElement);
-                this._toggleButtonState(this._inputList);
+                this._toggleButtonState();
 
             });
         });

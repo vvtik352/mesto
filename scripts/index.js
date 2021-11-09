@@ -8,7 +8,6 @@ const profileSubtitle = document.querySelector('.profile__subtitle')
 
 const popupProfile = document.querySelector('#popup__profile')
 const popupProfileForm = document.querySelector('#popup_profile-info')
-const popupProfileCloseButton = document.querySelector('#popup-profile_close')
 const descriptionInput = document.querySelector('#input-description')
 const nameInput = document.querySelector('#input-name')
 
@@ -20,7 +19,6 @@ const cardAddButton = document.querySelector('.profile__add-button')
 
 const popupCard = document.querySelector('#popup__card')
 const popupCardForm = document.querySelector('#popup_card-info')
-const popupCardCloseButton = document.querySelector('#popup-card_close')
 const linkInput = document.querySelector('#input-link')
 const cardNameInput = document.querySelector('#input-card__name')
 
@@ -61,15 +59,7 @@ const initialCards = [
 
 function addCard(name, link) {
 
-    const cardElement = new Card({ name, link }, '#element-template').generateCard()
-
-    cardElement.querySelector('.element__image').addEventListener('click', event => {
-        popupImageSrc.src = link
-        popupImageSrc.alt = name
-        popupImageName.textContent = name
-
-        openPopup(popupImage)
-    })
+    const cardElement = new Card({ name, link }, '#element-template', handleCardClick).generateCard()
 
     return cardElement
 }
@@ -82,6 +72,13 @@ initialCards.forEach((card) => {
 })
 
 
+function handleCardClick(event) {
+    popupImageSrc.src = event.target.src
+    popupImageSrc.alt = event.target.alt
+    popupImageName.textContent = event.target.alt
+
+    openPopup(popupImage)
+}
 
 
 
@@ -116,8 +113,7 @@ function closePopup(popup) {
 function closeByEsc(event) {
 
     if (event.key == 'Escape') {
-        const openedPopup = document.querySelector('.popup_opened')
-        closePopup(openedPopup)
+        closeOpenedPopup()
     }
 }
 
@@ -130,7 +126,7 @@ function closeByOverlayClick(event) {
 
 
 
-function handleCloseButton(event) {
+function closeOpenedPopup() {
     const openedPopup = document.querySelector('.popup_opened')
     closePopup(openedPopup)
 }
@@ -165,16 +161,27 @@ validatorProfile.enableValidation()
 const validatorCard = new FormValidator(validatorConfig, popupCardForm)
 validatorCard.enableValidation()
 
+const popups = document.querySelectorAll('.popup')
+
+popups.forEach((popup) => {
+    popup.addEventListener('click', (evt) => {
+        if (evt.target.classList.contains('popup_opened')) {
+            closePopup(popup)
+        }
+        if (evt.target.classList.contains('popup__close')) {
+            closePopup(popup)
+        }
+    })
+})
 
 // устанавливаем обработчики событий на кнопки
 popupProfileForm.addEventListener('submit', handleSubmitButtonEditProfile)
 profileEditButton.addEventListener('click', openProfilePopup)
-popupProfileCloseButton.addEventListener('click', handleCloseButton)
 
 
 popupCardForm.addEventListener('submit', handleSubmitButtonCardForm)
 cardAddButton.addEventListener('click', openCardPopup)
-popupCardCloseButton.addEventListener('click', handleCloseButton)
 
 
-popupImageCloseButton.addEventListener('click', handleCloseButton)
+
+popupImageCloseButton.addEventListener('click', closeOpenedPopup)
