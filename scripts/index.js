@@ -1,3 +1,4 @@
+import { Card } from "./Card.js"
 
 // получаем доступ к основым элементам управления на странице 
 const profileEditButton = document.querySelector('.profile__edit-button')
@@ -44,34 +45,24 @@ const initialCards = [
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
     },
     {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+        name: 'Туканчик',
+        link: 'https://images.unsplash.com/photo-1636334265407-97ea707f856c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1690&q=80'
     },
     {
         name: 'Холмогорский район',
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
     },
     {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+        name: 'Собака',
+        link: 'https://images.unsplash.com/photo-1636402419603-33f3d55100bb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=774&q=80'
     }
 ]
 
 
 function addCard(name, link) {
-    const cardTemplate = document.querySelector('#element-template').content
 
-    const cardElement = cardTemplate.querySelector('.element').cloneNode(true)
-    const cardImage = cardElement.querySelector('.element__image')
-    cardImage.src = link
-    cardImage.alt = name
+    const cardElement = new Card({ name, link }, '#element-template').generateCard()
 
-    cardElement.querySelector('.element__like').addEventListener('click', event => {
-        event.target.classList.toggle('element__like_active')
-    })
-    cardElement.querySelector('.element__delete').addEventListener('click', event => {
-        event.target.closest('.element').remove()
-    })
     cardElement.querySelector('.element__image').addEventListener('click', event => {
         popupImageSrc.src = link
         popupImageSrc.alt = name
@@ -79,7 +70,6 @@ function addCard(name, link) {
 
         openPopup(popupImage)
     })
-    cardElement.querySelector('.element__name').textContent = name
 
     return cardElement
 }
@@ -87,6 +77,7 @@ function addCard(name, link) {
 //загрузка карточек из массива
 initialCards.forEach((card) => {
     const newCard = addCard(card.name, card.link)
+
     cardContainer.prepend(newCard)
 })
 
