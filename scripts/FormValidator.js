@@ -26,11 +26,12 @@ export class FormValidator {
     }
 
 
-    disableButton() {
+    _disableButton() {
         this._buttonElement.classList.add(this._inactiveButtonClass)
         this._buttonElement.disabled = true
     }
-    enableButton() {
+    
+    _enableButton() {
         this._buttonElement.classList.remove(this._inactiveButtonClass)
         this._buttonElement.disabled = false
     }
@@ -38,10 +39,10 @@ export class FormValidator {
 
     _toggleButtonState() {
         if (this._hasInvalidInput(this._inputList)) {
-            this.disableButton(this._buttonElement, this._inactiveButtonClass)
+            this._disableButton(this._buttonElement, this._inactiveButtonClass)
 
         } else {
-            this.enableButton(this._buttonElement, this._inactiveButtonClass)
+            this._enableButton(this._buttonElement, this._inactiveButtonClass)
         }
     }
 
@@ -74,7 +75,7 @@ export class FormValidator {
     _setEventListeners() {
         this._formElement.addEventListener("submit", (event) => {
             event.preventDefault();
-            this.disableButton();
+            this._disableButton();
 
         });
 
