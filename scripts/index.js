@@ -178,10 +178,5 @@ popups.forEach((popup) => {
 popupProfileForm.addEventListener('submit', handleSubmitButtonEditProfile)
 profileEditButton.addEventListener('click', openProfilePopup)
 
-
 popupCardForm.addEventListener('submit', handleSubmitButtonCardForm)
 cardAddButton.addEventListener('click', openCardPopup)
-
-
-
-popupImageCloseButton.addEventListener('click', closeOpenedPopup)
