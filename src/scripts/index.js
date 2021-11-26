@@ -1,14 +1,22 @@
 import './../pages/index.css'
 
-import { Card } from "./Card.js"
 import { FormValidator } from "./FormValidator.js"
 import { validatorConfig } from "./constants.js"
+
+import { Card } from "./Card.js"
+import PopupWithImage from './PopupWithImage'
+import PopupWithForm from './PopupWithForm'
+import UserInfo from './UserInfo'
+
+
+const userInfo = new UserInfo('.profile__title', '.profile__subtitle')
 // получаем доступ к основым элементам управления на странице 
 const profileEditButton = document.querySelector('.profile__edit-button')
 const profileName = document.querySelector('.profile__title')
 const profileSubtitle = document.querySelector('.profile__subtitle')
 
-const popupProfile = document.querySelector('#popup__profile')
+const popupProfile = new PopupWithForm('#popup__profile', handleSubmitButtonEditProfile)
+popupProfile.setEventListeners()
 const popupProfileForm = document.querySelector('#popup_profile-info')
 const descriptionInput = document.querySelector('#input-description')
 const nameInput = document.querySelector('#input-name')
@@ -19,17 +27,15 @@ const cardContainer = document.querySelector('.elements')
 const cardAddButton = document.querySelector('.profile__add-button')
 
 
-const popupCard = document.querySelector('#popup__card')
+const popupCard = new PopupWithForm('#popup__card', handleSubmitButtonCardForm)
+popupCard.setEventListeners()
 const popupCardForm = document.querySelector('#popup_card-info')
 const linkInput = document.querySelector('#input-link')
 const cardNameInput = document.querySelector('#input-card__name')
 
 
-const popupImage = document.querySelector('#popup__image')
-const popupImageSrc = document.querySelector('.popup__image-src')
-const popupImageName = document.querySelector('.popup__image-name')
-const popupImageCloseButton = document.querySelector('#popup-image_close')
-
+const popupImage = new PopupWithImage('#popup__image')
+popupImage.setEventListeners()
 
 
 
@@ -61,6 +67,7 @@ const initialCards = [
 ]
 
 
+
 function addCard(name, link) {
 
     const cardElement = new Card({ name, link }, '#element-template', handleCardClick).generateCard()
@@ -77,70 +84,30 @@ initialCards.forEach((card) => {
 
 
 function handleCardClick(event) {
-    popupImageSrc.src = event.target.src
-    popupImageSrc.alt = event.target.alt
-    popupImageName.textContent = event.target.alt
 
-    openPopup(popupImage)
+    popupImage.open(event.target.src, event.target.alt)
 }
 
 
 
-function openPopup(popup) {
-    popup.classList.add('popup_opened');
-
-
-    document.addEventListener('keydown', closeByEsc)
-
-    document.addEventListener('click', closeByOverlayClick)
-}
 
 function openProfilePopup() {
-    nameInput.value = profileName.textContent
-    descriptionInput.value = profileSubtitle.textContent
-    openPopup(popupProfile);
+    const { name, descr } = userInfo.getUserInfo()
+    nameInput.value = name
+    descriptionInput.value = descr
+    popupProfile.open()
 }
 
 function openCardPopup() {
-    openPopup(popupCard);
+    popupCard.open()
 }
 
-
-function closePopup(popup) {
-    popup.classList.remove('popup_opened')
-
-    document.removeEventListener('keydown', closeByEsc)
-    document.removeEventListener('click', closeByOverlayClick)
-
-}
-
-function closeByEsc(event) {
-
-    if (event.key == 'Escape') {
-        closeOpenedPopup()
-    }
-}
-
-function closeByOverlayClick(event) {
-    if (event.target.classList.contains('popup')) {
-        closePopup(event.target)
-    }
-}
-
-
-
-
-function closeOpenedPopup() {
-    const openedPopup = document.querySelector('.popup_opened')
-    closePopup(openedPopup)
-}
 
 
 function handleSubmitButtonEditProfile(event) {
     event.preventDefault()
-    profileName.textContent = nameInput.value
-    profileSubtitle.textContent = descriptionInput.value
-    closePopup(popupProfile)
+    userInfo.setUserInfo({ name: nameInput.value, descr: descriptionInput.value })
+    popupProfile.close()
 }
 
 
@@ -154,7 +121,7 @@ function handleSubmitButtonCardForm(event) {
     cardContainer.prepend(newCard)
     cardNameInput.value = ''
     linkInput.value = ''
-    closePopup(popupCard)
+    popupCard.close()
 }
 
 
@@ -165,18 +132,6 @@ validatorProfile.enableValidation()
 const validatorCard = new FormValidator(validatorConfig, popupCardForm)
 validatorCard.enableValidation()
 
-const popups = document.querySelectorAll('.popup')
-
-popups.forEach((popup) => {
-    popup.addEventListener('click', (evt) => {
-        if (evt.target.classList.contains('popup_opened')) {
-            closePopup(popup)
-        }
-        if (evt.target.classList.contains('popup__close')) {
-            closePopup(popup)
-        }
-    })
-})
 
 // устанавливаем обработчики событий на кнопки
 popupProfileForm.addEventListener('submit', handleSubmitButtonEditProfile)
