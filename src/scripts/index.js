@@ -1,3 +1,5 @@
+import './../pages/index.css'
+
 import { Card } from "./Card.js"
 import { FormValidator } from "./FormValidator.js"
 import { validatorConfig } from "./constants.js"
@@ -27,6 +29,8 @@ const popupImage = document.querySelector('#popup__image')
 const popupImageSrc = document.querySelector('.popup__image-src')
 const popupImageName = document.querySelector('.popup__image-name')
 const popupImageCloseButton = document.querySelector('#popup-image_close')
+
+
 
 
 const initialCards = [

@@ -6,19 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Тихомиров Владимир" />
-    <link rel="stylesheet" href="./pages/index.css" />
     <title>Место</title>
 </head>
 
 <body class="page">
     <div class="page__container">
         <header class="header">
-            <img class='header__logo' src='./images/header__logo.svg' alt='место Россия'>
+            <img class='header__logo' src="<%=require('./images/header__logo.svg')%>" alt='место Россия'>
         </header>
         <main class="content">
             <section class="profile">
                 <div class="profile__container">
-                    <img class='profile__avatar' src='./images/avatar.jpeg' alt='Жак Ив Кусто'>
+                    <img class='profile__avatar' src="<%=require('./images/avatar.jpg')%>" alt='Жак Ив Кусто'>
                     <div class="profile__info">
                         <h1 class="profile__title">Жак-Ив Кусто</h1>
                         <button class="profile__edit-button" type="button" aria-label="Редактировать"></button>
@@ -57,10 +56,12 @@
             </h2>
 
             <form class='popup__form' id='popup_profile-info'>
-                <input class='popup__input' name='name' id='input-name' type='text' required minlength="2" maxlength="40" >
+                <input class='popup__input' name='name' id='input-name' type='text' required minlength="2"
+                    maxlength="40">
                 <span class="error" id='input-name-error'></span>
-                <input class='popup__input' name='description' id='input-description' type='text' required minlength="2" maxlength="200" >
-                <span class="error" id='input-description-error' ></span>
+                <input class='popup__input' name='description' id='input-description' type='text' required minlength="2"
+                    maxlength="200">
+                <span class="error" id='input-description-error'></span>
                 <button class='popup__submit' id='submit-profile' type="submit">Сохранить</button>
             </form>
         </div>
@@ -76,11 +77,11 @@
             <form class='popup__form' id='popup_card-info'>
                 <input class='popup__input' name='name' id='input-card__name' placeholder="Название" type='text'
                     required>
-                    <span class="error" id="input-card__name-error"></span>
+                <span class="error" id="input-card__name-error"></span>
 
                 <input class='popup__input' name='description' id='input-link' placeholder="Ссылка на картинку"
-                    type='url' required >
-                    <span class="error" id="input-link-error"></span>
+                    type='url' required>
+                <span class="error" id="input-link-error"></span>
 
                 <button class='popup__submit popup__submit_disabled' id='submit-card' type="submit">Сохранить</button>
             </form>
