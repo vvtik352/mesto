@@ -1,22 +1,16 @@
 import './../pages/index.css'
-
 import { FormValidator } from "./FormValidator.js"
 import { validatorConfig } from "./constants.js"
-
 import { Card } from "./Card.js"
 import PopupWithImage from './PopupWithImage'
 import PopupWithForm from './PopupWithForm'
 import UserInfo from './UserInfo'
 
 
-const userInfo = new UserInfo('.profile__title', '.profile__subtitle')
 // получаем доступ к основым элементам управления на странице 
 const profileEditButton = document.querySelector('.profile__edit-button')
-const profileName = document.querySelector('.profile__title')
-const profileSubtitle = document.querySelector('.profile__subtitle')
+const cardAddButton = document.querySelector('.profile__add-button')
 
-const popupProfile = new PopupWithForm('#popup__profile', handleSubmitButtonEditProfile)
-popupProfile.setEventListeners()
 const popupProfileForm = document.querySelector('#popup_profile-info')
 const descriptionInput = document.querySelector('#input-description')
 const nameInput = document.querySelector('#input-name')
@@ -24,19 +18,22 @@ const nameInput = document.querySelector('#input-name')
 
 const cardContainer = document.querySelector('.elements')
 
-const cardAddButton = document.querySelector('.profile__add-button')
 
-
-const popupCard = new PopupWithForm('#popup__card', handleSubmitButtonCardForm)
-popupCard.setEventListeners()
 const popupCardForm = document.querySelector('#popup_card-info')
 const linkInput = document.querySelector('#input-link')
 const cardNameInput = document.querySelector('#input-card__name')
 
 
+// выделяем переменные под объекты новых классов
+const userInfo = new UserInfo('.profile__title', '.profile__subtitle')
+const popupProfile = new PopupWithForm('#popup__profile', handleSubmitButtonEditProfile)
+const popupCard = new PopupWithForm('#popup__card', handleSubmitButtonCardForm)
 const popupImage = new PopupWithImage('#popup__image')
-popupImage.setEventListeners()
 
+// устанавливаем на формы обработчики событий
+popupProfile.setEventListeners()
+popupCard.setEventListeners()
+popupImage.setEventListeners()
 
 
 const initialCards = [
@@ -67,6 +64,7 @@ const initialCards = [
 ]
 
 
+// функции описывающие взаимодействие между новыми компонентами 
 
 function addCard(name, link) {
 
@@ -87,8 +85,6 @@ function handleCardClick(event) {
 
     popupImage.open(event.target.src, event.target.alt)
 }
-
-
 
 
 function openProfilePopup() {
