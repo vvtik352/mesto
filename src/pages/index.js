@@ -1,10 +1,11 @@
 import './../pages/index.css'
-import { FormValidator } from "./FormValidator.js"
-import { validatorConfig } from "./constants.js"
-import { Card } from "./Card.js"
-import PopupWithImage from './PopupWithImage'
-import PopupWithForm from './PopupWithForm'
-import UserInfo from './UserInfo'
+import { initialCards } from '../utils/constants'
+import { FormValidator } from "../scripts/FormValidator.js"
+import { validatorConfig } from "../scripts/constants.js"
+import { Card } from "../scripts/Card.js"
+import PopupWithImage from '../scripts/PopupWithImage'
+import PopupWithForm from '../scripts/PopupWithForm'
+import UserInfo from '../scripts/UserInfo'
 
 
 // получаем доступ к основым элементам управления на странице 
@@ -36,37 +37,10 @@ popupCard.setEventListeners()
 popupImage.setEventListeners()
 
 
-const initialCards = [
-    {
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Туканчик',
-        link: 'https://images.unsplash.com/photo-1636334265407-97ea707f856c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1690&q=80'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Собака',
-        link: 'https://images.unsplash.com/photo-1636402419603-33f3d55100bb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=774&q=80'
-    }
-]
-
 
 // функции описывающие взаимодействие между новыми компонентами 
 
-function addCard(name, link) {
+function createCard(name, link) {
 
     const cardElement = new Card({ name, link }, '#element-template', handleCardClick).generateCard()
 
@@ -75,7 +49,7 @@ function addCard(name, link) {
 
 //загрузка карточек из массива
 initialCards.forEach((card) => {
-    const newCard = addCard(card.name, card.link)
+    const newCard = createCard(card.name, card.link)
 
     cardContainer.prepend(newCard)
 })
@@ -109,11 +83,8 @@ function handleSubmitButtonEditProfile(event) {
 
 function handleSubmitButtonCardForm(event) {
     event.preventDefault()
-    initialCards.push({
-        name: cardNameInput.value,
-        link: linkInput.value
-    })
-    const newCard = addCard(cardNameInput.value, linkInput.value)
+  
+    const newCard = createCard(cardNameInput.value, linkInput.value)
     cardContainer.prepend(newCard)
     cardNameInput.value = ''
     linkInput.value = ''

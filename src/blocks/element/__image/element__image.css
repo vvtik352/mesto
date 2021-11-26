@@ -1,7 +1,8 @@
 .element__image {
     cursor: pointer;
     width: 282px;
-    height: 282px;
+    min-height: 282px;
+    max-height: 282px;
     object-fit: cover;
     transition: all 0.3s;
 }
