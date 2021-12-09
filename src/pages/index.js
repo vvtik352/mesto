@@ -71,7 +71,7 @@ mestoApi.getUserInfo()
             cardSection = new Section({ data: data, renderer: createCard }, '.elements')
             cardSection.renderItems()
         })
-    })
+    }).catch(error => console.error(error))
 
 // функции описывающие взаимодействие между новыми компонентами 
 
