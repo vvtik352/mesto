@@ -17,7 +17,11 @@
         <main class="content">
             <section class="profile">
                 <div class="profile__container">
-                    <img class='profile__avatar' src="<%=require('./images/avatar.jpg')%>" alt='Жак Ив Кусто'>
+                    <!-- <div class="profile__avatar-container"> -->
+                    <button class="profile__avatar-edit">
+                        <img class='profile__avatar' src="<%=require('./images/avatar.jpg')%>" alt='Жак Ив Кусто'>
+                    </button>
+                    <!-- </div> -->
                     <div class="profile__info">
                         <h1 class="profile__title">Жак-Ив Кусто</h1>
                         <button class="profile__edit-button" type="button" aria-label="Редактировать"></button>
@@ -35,7 +39,10 @@
                         <div class='element__description'>
                             <h2 class='element__name'>
                             </h2>
-                            <button class='element__like' type="button"></button>
+                            <div class="element__like-container">
+                                <button class='element__like' type="button"></button>
+                                <span class="element__like-count">0</span>
+                            </div>
                         </div>
                     </div>
                 </template>
@@ -93,6 +100,35 @@
             <button class='popup__close ' id='popup-image_close' type="button"></button>
             <img class='popup__image-src' src='#'>
             <p class='popup__image-name'></p>
+        </div>
+    </div>
+
+    <div class='popup' id='popup__avatar'>
+        <div class="popup__container">
+            <button class='popup__close' id='popup-card_close' type="button"></button>
+            <h2 class="popup__title">
+                Обновить аватар
+            </h2>
+
+            <form class='popup__form' id='popup_avatar-edit'>
+                <input class='popup__input' name='description' id='input-link-avatar' placeholder="Ссылка на картинку"
+                    type='url' required>
+                <span class="error" id="input-link-avatar-error"></span>
+
+                <button class='popup__submit popup__submit_disabled' id='submit-card' type="submit">Сохранить</button>
+            </form>
+        </div>
+    </div>
+
+    <div class='popup' id='popup__delete'>
+        <div class="popup__container">
+            <button class='popup__close' id='popup-card_close' type="button"></button>
+            <h2 class="popup__title">
+                Вы уверены?
+            </h2>
+            <form class='popup__form' id='popup_card-info'>
+                <button class='popup__submit' id='submit-card' type="submit">Да</button>
+            </form>
         </div>
     </div>
 </body>

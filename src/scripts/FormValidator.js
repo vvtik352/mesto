@@ -75,11 +75,10 @@ export class FormValidator {
     _setEventListeners() {
         this._formElement.addEventListener("submit", (event) => {
             event.preventDefault();
-            this._disableButton();
+            // this._disableButton();
 
         });
 
-        this._toggleButtonState();
         this._inputList.forEach((inputElement) => {
             inputElement.addEventListener('input', () => {
                 this._checkInputValidity(inputElement);
@@ -93,4 +92,11 @@ export class FormValidator {
         this._setEventListeners();
     }
 
+    // Сбрасывает состояние формы 
+    resetValidation() {
+        this._disableButton()
+        this._inputList.forEach((inputElement) => {
+            this._hideInputError(inputElement)
+        });
+    }
 }
