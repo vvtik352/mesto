@@ -8,6 +8,8 @@ export default class PopupWithForm extends Popup {
         this._handleSubmit = callbackSubmit
 
         this._submitButton = this._form.querySelector('.popup__submit')
+
+        this.setIsProcessing = this.setIsProcessing.bind(this)
     }
 
 
@@ -20,18 +22,7 @@ export default class PopupWithForm extends Popup {
     setEventListeners() {
         super.setEventListeners()
 
-        // перед выполнением sumbit функции 
-        // ставим форму в режим "сохранения" данных
-        const submit = event => {
-            this.setIsProcessing(true)
-
-            this._handleSubmit(event).then(() => { this.close() })
-                .catch(error => error)
-                .finally(() => {
-                    this.setIsProcessing(false)
-                });
-        }
-        this._form.addEventListener('submit', submit)
+        this._form.addEventListener('submit', (event) => this._handleSubmit(event, this._getInputValues()))
     }
 
     setIsProcessing(isProcessing) {
@@ -45,6 +36,10 @@ export default class PopupWithForm extends Popup {
     // Приватные методы
 
     _getInputValues() {
-        return this._inputList.map(formInput => formInput.value)
+        const formValues = {} // объект { [input-id]: [input-value] }
+        this._inputList.map((input) => {
+            formValues[input.id] = input.value
+        })
+        return formValues
     }
 }

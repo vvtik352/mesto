@@ -1,15 +1,14 @@
 import './../pages/index.css'
-import { BASE_URL, MY_COHORT, TOKEN } from '../utils/constants'
-import { FormValidator } from "../scripts/FormValidator.js"
-import { validatorConfig } from "../scripts/constants.js"
-import { Card } from "../scripts/Card.js"
-import PopupWithImage from '../scripts/PopupWithImage'
-import PopupWithForm from '../scripts/PopupWithForm'
+import { BASE_URL, MY_COHORT, TOKEN, validatorConfig } from '../utils/constants'
+import { FormValidator } from "../components/FormValidator.js"
+import { Card } from "../components/Card.js"
+import PopupWithImage from '../components/PopupWithImage'
+import PopupWithForm from '../components/PopupWithForm'
 
-import UserInfo from '../scripts/UserInfo'
-import Api from '../scripts/Api'
-import PopupSubmit from '../scripts/PopupSubmit'
-import Section from '../scripts/Section'
+import UserInfo from '../components/UserInfo'
+import Api from '../components/Api'
+import PopupSubmit from '../components/PopupSubmit'
+import Section from '../components/Section'
 
 
 // получаем доступ к основым элементам управления на странице 
@@ -21,15 +20,8 @@ const popupProfileForm = document.querySelector('#popup_profile-info')
 const descriptionInput = document.querySelector('#input-description')
 const nameInput = document.querySelector('#input-name')
 
-const cardContainer = document.querySelector('.elements')
-
 const popupCardForm = document.querySelector('#popup_card-info')
-const linkInput = document.querySelector('#input-link')
-const cardNameInput = document.querySelector('#input-card__name')
-
-
 const popupAvatar = document.querySelector('#popup_avatar-edit');
-const avatarLinkInput = document.querySelector('#input-link-avatar')
 
 // выделяем переменные под объекты новых классов
 const userInfo = new UserInfo('.profile__title', '.profile__subtitle', '.profile__avatar')
@@ -61,17 +53,16 @@ const mestoApi = new Api(apiConfig)
 
 
 let cardSection = null // т.к массив карточек приходит только после запроса то инициализируем переменню уже внутри запроса
-mestoApi.getUserInfo()
-    .then(data => {
-        currentUserID = data._id
-        userInfo.setUserInfo({ name: data.name, descr: data.about })
-        userInfo.setUserAvatar(data.avatar)
-    }).then(() => {
-        mestoApi.getCards().then(data => {
-            cardSection = new Section({ data: data, renderer: createCard }, '.elements')
-            cardSection.renderItems()
-        })
-    }).catch(error => console.error(error))
+
+Promise.all([mestoApi.getUserInfo(), mestoApi.getCards()]).then(([user, cards]) => {
+    currentUserID = user._id
+    userInfo.setUserInfo({ name: user.name, descr: user.about })
+    userInfo.setUserAvatar(user.avatar)
+
+    cardSection = new Section({ data: cards, renderer: createCard }, '.elements')
+    cardSection.renderItems()
+}).catch(error => console.error(error))
+
 
 // функции описывающие взаимодействие между новыми компонентами 
 
@@ -92,9 +83,12 @@ function handleCardClick(event) {
 
 function handleDeleteCard(element, id) {
 
-    return mestoApi.deleteCard(id).then(() => {
-        element.remove()
-    })
+    return mestoApi.deleteCard(id)
+        .then(() => {
+            element.remove()
+        })
+        .then(() => { popupSumbitDeleting.close() })
+        .catch(error => console.error(`Ошибка: ${error}`))
 }
 
 // открывает форму подтверждения удаления карточки
@@ -105,7 +99,7 @@ function SubmitDeleting(element, id) {
 function handleLikeCard(liked, id) {
     if (!liked)
         return mestoApi.likeCard(id)
-    return mestoApi.dislikeCard(id)
+    return mestoApi.dislikeCard(id).catch(error => console.error(error))
 }
 
 function openProfilePopup() {
@@ -126,33 +120,48 @@ function openAvatarEditPopup() {
     popupAvatarEdit.open()
 }
 
-function handleSubmitButtonEditProfile(event) {
+function handleSubmitButtonEditProfile(event, values) {
     event.preventDefault()
+    popupProfile.setIsProcessing(true)
 
     return mestoApi.updateUserInfo({
-        name: nameInput.value,
-        about: descriptionInput.value
-    }).then((data) => {
-        userInfo.setUserInfo({ name: data.name, descr: data.about })
+        name: values['input-name'],
+        about: values['input-description']
     })
+        .then((data) => {
+            userInfo.setUserInfo({ name: data.name, descr: data.about })
+        })
+        .then(() => { popupProfile.close() })
+        .catch(error => console.error(`Ошибка: ${error}`))
+        .finally(() => { popupProfile.setIsProcessing(false) })
 
 }
 
-function handleSubmitButtonCardForm(event) {
+function handleSubmitButtonCardForm(event, values) {
     event.preventDefault()
+    popupCard.setIsProcessing(true)
 
-    return mestoApi.addCard({ name: cardNameInput.value, link: linkInput.value }).then((card) => {
-        if (cardSection)
-            cardSection.setItem(card)
-    })
+    return mestoApi.addCard({ name: values['input-card__name'], link: values['input-link'] })
+        .then((card) => {
+            if (cardSection)
+                cardSection.setItem(card)
+        })
+        .then(() => { popupCard.close() })
+        .catch(error => console.error(`Ошибка: ${error}`))
+        .finally(() => { popupCard.setIsProcessing(false) })
 }
 
-function handleSubmitButtonAvatarEdit(event) {
+function handleSubmitButtonAvatarEdit(event, values) {
     event.preventDefault()
+    popupAvatarEdit.setIsProcessing(true)
 
-    return mestoApi.updateUserAvatar({ avatar: avatarLinkInput.value }).then(response => {
-        userInfo.setUserAvatar(response.avatar);
-    })
+    return mestoApi.updateUserAvatar({ avatar: values['input-link-avatar'] })
+        .then(response => {
+            userInfo.setUserAvatar(response.avatar);
+        })
+        .then(() => { popupAvatarEdit.close() })
+        .catch(error => console.error(`Ошибка: ${error}`))
+        .finally(() => { popupAvatarEdit.setIsProcessing(false) })
 }
 
 const validatorProfile = new FormValidator(validatorConfig, popupProfileForm)
