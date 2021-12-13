@@ -85,9 +85,9 @@ function handleDeleteCard(element, id) {
 
     return mestoApi.deleteCard(id)
         .then(() => {
-            element.remove()
+            element.removeCard()
+            popupSumbitDeleting.close()
         })
-        .then(() => { popupSumbitDeleting.close() })
         .catch(error => console.error(`Ошибка: ${error}`))
 }
 
@@ -96,10 +96,16 @@ function SubmitDeleting(element, id) {
     popupSumbitDeleting.open(element, id)
 }
 
-function handleLikeCard(liked, id) {
-    if (!liked)
-        return mestoApi.likeCard(id)
-    return mestoApi.dislikeCard(id).catch(error => console.error(error))
+function handleLikeCard(card) {
+    if (card.isLiked()) {
+        mestoApi.dislikeCard(card._id)
+            .then((data) => card.setLikesInfo(data.likes))
+            .catch(error => console.error(error))
+    } else {
+        mestoApi.likeCard(card._id)
+            .then((data) => card.setLikesInfo(data.likes))
+            .catch(error => console.error(error))
+    }
 }
 
 function openProfilePopup() {
@@ -130,8 +136,8 @@ function handleSubmitButtonEditProfile(event, values) {
     })
         .then((data) => {
             userInfo.setUserInfo({ name: data.name, descr: data.about })
+            popupProfile.close()
         })
-        .then(() => { popupProfile.close() })
         .catch(error => console.error(`Ошибка: ${error}`))
         .finally(() => { popupProfile.setIsProcessing(false) })
 
@@ -143,10 +149,11 @@ function handleSubmitButtonCardForm(event, values) {
 
     return mestoApi.addCard({ name: values['input-card__name'], link: values['input-link'] })
         .then((card) => {
-            if (cardSection)
-                cardSection.setItem(card)
+            if (cardSection) {
+                cardSection.setItem(card, true)
+                popupCard.close()
+            }
         })
-        .then(() => { popupCard.close() })
         .catch(error => console.error(`Ошибка: ${error}`))
         .finally(() => { popupCard.setIsProcessing(false) })
 }
@@ -158,8 +165,8 @@ function handleSubmitButtonAvatarEdit(event, values) {
     return mestoApi.updateUserAvatar({ avatar: values['input-link-avatar'] })
         .then(response => {
             userInfo.setUserAvatar(response.avatar);
+            popupAvatarEdit.close()
         })
-        .then(() => { popupAvatarEdit.close() })
         .catch(error => console.error(`Ошибка: ${error}`))
         .finally(() => { popupAvatarEdit.setIsProcessing(false) })
 }

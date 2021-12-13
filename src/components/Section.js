@@ -7,8 +7,16 @@ export default class Section {
         this.renderItems = this.renderItems.bind(this)
     }
 
-    setItem(item) {
-        this._container.append(this._renderer(item))
+    /**
+     * 
+     * @param {*} item - элемент для добавление в список
+     * @param {*} toStart - если true вставялет элемент в начало списка(по умолчанию false)
+     */
+    setItem(item, toStart = false) {
+        if (toStart)
+            this._container.prepend(this._renderer(item))
+        else
+            this._container.append(this._renderer(item))
     }
 
     renderItems() {
